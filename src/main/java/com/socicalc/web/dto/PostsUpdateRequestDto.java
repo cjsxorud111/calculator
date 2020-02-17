@@ -13,6 +13,7 @@ public class PostsUpdateRequestDto {
     @Builder
     public PostsUpdateRequestDto(String title, String content) {
         this.title = title;
+
         this.content = content;
     }
 }
