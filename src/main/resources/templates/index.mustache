@@ -1,5 +1,5 @@
 {{>layout/header}}
-<h1>스프링부트로 시작하는 웹 서비스 Ver.2</h1>
+<div>Hello Word!</div>
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-6">
@@ -29,4 +29,23 @@
         </tbody>
     </table>
 </div>
+<div>
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>단어</th>
+            <th>정의</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#words}}
+            <tr>
+                <td><a href="">{{titlee}}</a></td>
+                <td>{{conc}}</td>
+            </tr>
+        {{/words}}
+        </tbody>
+    </table>
+</div>
+
 {{>layout/footer}}

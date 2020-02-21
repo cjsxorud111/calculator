@@ -1,0 +1,27 @@
+{{>layout/header}}
+<div class="col-md-12">
+    <br><br>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/posts/save_wiki_word" role="button" class="btn btn-primary">위키단어업로드</a>
+        </div>
+    </div>
+    <br>
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>단어</th>
+            <th>정의</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#words}}
+            <tr>
+                <td><a href="">{{titlee}}</a></td>
+                <td>{{conc}}</td>
+            </tr>
+        {{/words}}
+        </tbody>
+    </table>
+</div>
+{{>layout/footer}}

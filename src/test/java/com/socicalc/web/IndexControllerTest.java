@@ -19,6 +19,8 @@ public class IndexControllerTest {
 
     @Test
     public void 메인페이지_로딩() {
+        //given
+
         //when
         String body = this.restTemplate.getForObject("/", String.class);
 
