@@ -5,10 +5,11 @@ import com.socicalc.web.dto.PostsResponseDto;
 import com.socicalc.web.dto.PostsSaveRequestDto;
 import com.socicalc.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class PostsApiController {
 
     private final PostsService postsService;
@@ -18,7 +19,7 @@ public class PostsApiController {
         return postsService.save(requestDto);
     }
 
-    @GetMapping("/api/v1/wikiwords")
+    @PostMapping("/api/v1/wikiwords")
     public void saveWikiWord() {
         postsService.saveWikiWord();
     }

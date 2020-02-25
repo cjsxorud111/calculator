@@ -7,9 +7,10 @@
         </div>
     </div>
     <br>
-    <table class="table table-horizontal table-bordered">
+    <!--<table class="table table-horizontal table-bordered">
         <thead class="thead-strong">
         <tr>
+            <th>번호</th>
             <th>단어</th>
             <th>정의</th>
         </tr>
@@ -18,11 +19,22 @@
         {{#words}}
             <tr>
                 <td>{{id}}</td>
-                <td><a href="">{{title}}</a></td>
+                <td>{{title}}</td>
                 <td>{{content}}</td>
             </tr>
         {{/words}}
         </tbody>
-    </table>
+    </table>-->
+
+    <div id="content" style="border: 1px solid red;">
+        {{#words}}
+            <div class="panel" style="border: 1px solid blue;">
+                <div class="id" style="border: 1px solid green;">{{id}}</div>
+                <div class="title" style="border: 1px solid purple;">{{title}}</div>
+                <div class="content" style="border: 1px solid yellow;">{{content}}</div>
+            </div>
+        {{/words}}
+    </div>
+
 </div>
 {{>layout/footer}}

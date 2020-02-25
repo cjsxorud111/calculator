@@ -45,6 +45,7 @@ public class IndexController {
 
         model.addAttribute("elem", elem);*/
         //TODO DB insert 로직 구현후 select로직 추가
+        postsService.saveWikiWord();
         postsService.findWords();
         model.addAttribute("words", postsService.findWords());
 
