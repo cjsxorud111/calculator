@@ -18,6 +18,11 @@ public class PostsApiController {
         return postsService.save(requestDto);
     }
 
+    @GetMapping("/api/v1/wikiwords")
+    public void saveWikiWord() {
+        postsService.saveWikiWord();
+    }
+
     @PutMapping("/api/v1/posts/{id}")
     public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto) {
         return postsService.update(id, requestDto);

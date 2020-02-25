@@ -3,7 +3,7 @@
     <br><br>
     <div class="row">
         <div class="col-md-6">
-            <a href="/posts/save_wiki_word" role="button" class="btn btn-primary">위키단어업로드</a>
+            <a href="/api/v1/wikiwords" role="button" class="btn btn-primary">위키단어업로드</a>
         </div>
     </div>
     <br>
@@ -17,8 +17,9 @@
         <tbody id="tbody">
         {{#words}}
             <tr>
-                <td><a href="">{{titlee}}</a></td>
-                <td>{{conc}}</td>
+                <td>{{id}}</td>
+                <td><a href="">{{title}}</a></td>
+                <td>{{content}}</td>
             </tr>
         {{/words}}
         </tbody>

@@ -1,6 +1,5 @@
 package com.socicalc.web;
 
-import com.socicalc.domain.words.WordCrawler;
 import com.socicalc.service.posts.PostsService;
 import com.socicalc.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -45,10 +44,9 @@ public class IndexController {
         Elements elem2=doc.select(".tbl_weather tbody>tr:nth-child(1) img");
 
         model.addAttribute("elem", elem);*/
-
-        WordCrawler wordCrawler = new WordCrawler();
-
-        model.addAttribute("words", wordCrawler.getWikiWord());
+        //TODO DB insert 로직 구현후 select로직 추가
+        postsService.findWords();
+        model.addAttribute("words", postsService.findWords());
 
         return "main";
     }

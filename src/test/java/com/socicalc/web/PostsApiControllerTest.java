@@ -38,6 +38,31 @@ public class PostsApiControllerTest {
         postsRepository.deleteAll();
     }
 
+    //TODO /api/v1/wikiwords 완성후 테스트코드 작성
+    /*@Test
+    public void WordsPosts_등록() throws Exception {
+        //given
+        String title = "title";
+        String content = "content";
+        PostsWordRequestDto requestDto = PostsWordRequestDto.builder()
+                .title(title)
+                .content(content)
+                .platform(PlatformEnum.WIKI)
+                .build();
+
+        String url = "http://localhost:" + port + "/api/v1/wikiwords";
+
+        //when
+        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+        List<WordsPosts> all = postsRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo(title);
+        assertThat(all.get(0).getContent()).isEqualTo(content);
+    }*/
+
     @Test
     public void Posts_등록된다() throws Exception {
         //given
