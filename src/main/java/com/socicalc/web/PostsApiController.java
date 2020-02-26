@@ -19,7 +19,7 @@ public class PostsApiController {
         return postsService.save(requestDto);
     }
 
-    @PostMapping("/api/v1/wikiwords")
+    @GetMapping("/api/v1/wikiwords")
     public void saveWikiWord() {
         postsService.saveWikiWord();
     }

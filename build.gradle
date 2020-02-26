@@ -32,8 +32,14 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-mustache')
     compile('com.h2database:h2')
 
+    // MyBatis
+    compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2")
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('mysql:mysql-connector-java')
+
     compile('org.jsoup:jsoup:1.7.3')
     compile('org.springframework.session:spring-session-jdbc')
+
 
     compile("org.mariadb.jdbc:mariadb-java-client")
 

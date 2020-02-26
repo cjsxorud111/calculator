@@ -25,6 +25,7 @@ public class IndexController {
 
     @GetMapping("/main")
     public String main(Model model) {
+        System.out.println("테스트얌ㅎㅎㅎ");
         //TODO 회원가입기능 추가할 때 오류 수정 후 사용
         /*SessionUser user = (User) httpSession.getAttribute("user");
 
@@ -46,9 +47,7 @@ public class IndexController {
         model.addAttribute("elem", elem);*/
         //TODO DB insert 로직 구현후 select로직 추가
         postsService.saveWikiWord();
-        postsService.findWords();
-        model.addAttribute("words", postsService.findWords());
-
+        model.addAttribute("words",postsService.findWords());
         return "main";
     }
 
