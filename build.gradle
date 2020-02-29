@@ -40,7 +40,6 @@ dependencies {
     compile('org.jsoup:jsoup:1.7.3')
     compile('org.springframework.session:spring-session-jdbc')
 
-
     compile("org.mariadb.jdbc:mariadb-java-client")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
