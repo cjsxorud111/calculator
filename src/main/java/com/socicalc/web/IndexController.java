@@ -25,7 +25,7 @@ public class IndexController {
 
     @GetMapping("/main")
     public String main(Model model) {
-        System.out.println("테스트얌ㅎㅎㅎ");
+        System.out.println("테스트얌ㅎㅎㅎㅋㅋㅋㅋ");
         //TODO 회원가입기능 추가할 때 오류 수정 후 사용
         /*SessionUser user = (User) httpSession.getAttribute("user");
 
