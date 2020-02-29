@@ -70,18 +70,20 @@ public class PostsService {
     //TODO db셀렉트 테스트코드 공부후 테스트코드 작성
     @Transactional(readOnly = true)
     public List<WordsResponseDto> findWords() {
-        List<WordsResponseDto> korWordList = korWordsPostsRepository.findKorWords().stream()
-                .map(WordsResponseDto::new)
-                .collect(Collectors.toList());
-
-        List<WordsResponseDto> japWordList = japWordsPostsRepository.findJapWords().stream()
-                .map(WordsResponseDto::new)
-                .collect(Collectors.toList());
-
         List<WordsResponseDto> words = new ArrayList<>();
-        words.addAll(korWordList);
-        words.addAll(japWordList);
 
+        if (korWordsPostsRepository.findKorWords().size() != 0) {
+            List<WordsResponseDto> korWordList = korWordsPostsRepository.findKorWords().stream()
+                    .map(WordsResponseDto::new)
+                    .collect(Collectors.toList());
+
+            List<WordsResponseDto> japWordList = japWordsPostsRepository.findJapWords().stream()
+                    .map(WordsResponseDto::new)
+                    .collect(Collectors.toList());
+
+            words.addAll(korWordList);
+            words.addAll(japWordList);
+        }
         return words;
     }
 
