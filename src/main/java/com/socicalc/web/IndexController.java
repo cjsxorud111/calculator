@@ -47,7 +47,7 @@ public class IndexController {
         model.addAttribute("elem", elem);*/
         // 단어크롤링
         //postsService.saveWikiWord();
-        model.addAttribute("words",postsService.findWords());
+        //model.addAttribute("words",postsService.findWords());
         return "main";
     }
 
