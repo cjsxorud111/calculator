@@ -70,7 +70,6 @@ public class PostsService {
     //TODO db셀렉트 테스트코드 공부후 테스트코드 작성
     @Transactional(readOnly = true)
     public List<WordsResponseDto> findWords() {
-        System.out.println("ehlsmsrhdi??");
         List<WordsResponseDto> korWordList = korWordsPostsRepository.findKorWords().stream()
                 .map(WordsResponseDto::new)
                 .collect(Collectors.toList());
@@ -82,7 +81,6 @@ public class PostsService {
         List<WordsResponseDto> words = new ArrayList<>();
         words.addAll(korWordList);
         words.addAll(japWordList);
-        System.out.println(japWordList.get(1).getContent()+"gggㅎㅎㅎㅎㅎㅎ");
 
         return words;
     }
