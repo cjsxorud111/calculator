@@ -69,8 +69,9 @@ public class PostsService {
 
     //TODO db셀렉트 테스트코드 공부후 테스트코드 작성
     @Transactional(readOnly = true)
-    public List<WordsResponseDto> findWords() {
+    public List<List<WordsResponseDto>> findWords() {
         List<WordsResponseDto> words = new ArrayList<>();
+        List<List<WordsResponseDto>> dividedByColumnWords = new ArrayList<>();
 
         if (korWordsPostsRepository.findKorWords().size() != 0) {
             List<WordsResponseDto> korWordList = korWordsPostsRepository.findKorWords().stream()
@@ -83,8 +84,15 @@ public class PostsService {
 
             words.addAll(korWordList);
             words.addAll(japWordList);
+
+            int wordsColumnSize = words.size()/3;
+
+            dividedByColumnWords.add(words.subList(0, wordsColumnSize));
+            dividedByColumnWords.add(words.subList(wordsColumnSize, wordsColumnSize * 2));
+            dividedByColumnWords.add(words.subList(wordsColumnSize * 2, words.size()));
         }
-        return words;
+
+        return dividedByColumnWords;
     }
 
     @Transactional

@@ -2,6 +2,7 @@ package com.socicalc.web;
 
 import com.socicalc.service.posts.PostsService;
 import com.socicalc.web.dto.PostsResponseDto;
+import com.socicalc.web.dto.WordsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -47,7 +49,12 @@ public class IndexController {
         model.addAttribute("elem", elem);*/
         // 단어크롤링
         //postsService.saveWikiWord();
-        model.addAttribute("words",postsService.findWords());
+
+        List<List<WordsResponseDto>> words = postsService.findWords();
+        model.addAttribute("firstColumn", words.get(0));
+        model.addAttribute("secondColumn", words.get(1));
+        model.addAttribute("thirdColumn", words.get(2));
+
         return "main";
     }
 
