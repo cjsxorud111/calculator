@@ -1,6 +1,5 @@
 package com.socicalc.web.dto;
 
-import com.socicalc.domain.posts.JapWordsPosts;
 import com.socicalc.domain.posts.KorWordsPosts;
 import com.socicalc.domain.words.PlatformEnum;
 import lombok.Builder;
@@ -31,11 +30,4 @@ public class PostsWordRequestDto {
                 .build();
     }
 
-    public JapWordsPosts toJapEntity() {
-        return JapWordsPosts.builder()
-                .title(title)
-                .content(content)
-                .platform(platform)
-                .build();
-    }
 }

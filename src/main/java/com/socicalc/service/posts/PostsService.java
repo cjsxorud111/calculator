@@ -1,10 +1,10 @@
 package com.socicalc.service.posts;
 
-import com.socicalc.domain.posts.JapWordsPostsRepository;
 import com.socicalc.domain.posts.KorWordsPostsRepository;
 import com.socicalc.domain.posts.Posts;
 import com.socicalc.domain.posts.PostsRepository;
 import com.socicalc.domain.words.WordCrawler;
+import com.socicalc.mybatisdao.Mapper;
 import com.socicalc.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class PostsService {
     private final PostsRepository postsRepository;
     private final KorWordsPostsRepository korWordsPostsRepository;
-    private final JapWordsPostsRepository japWordsPostsRepository;
+    private final Mapper mapper;
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
@@ -37,10 +37,44 @@ public class PostsService {
         for (PostsWordRequestDto korWord : wikiKorWordList) {
             korWordsPostsRepository.save(korWord.toKorEntity());
         }
+    }
 
-        for (PostsWordRequestDto japWord : wikiJapWordList) {
-            japWordsPostsRepository.save(japWord.toJapEntity());
+    @Transactional
+    public PagesDto getPageNum(int thisPageInt) {
+        PagesDto pagesDto = new PagesDto();
+        int allNum = mapper.getPageNum()/30;
+        pagesDto.setAllNum(allNum);
+
+        String temp = Integer.toString(thisPageInt);
+        int numericValue = Character.getNumericValue(temp.charAt(temp.length() - 1));
+        if (thisPageInt > 9 && numericValue > 0) {
+            String splitTemp = temp.substring(0, temp.length() - 1);
+            splitTemp += '1';
+            temp = splitTemp;
+        } else if (thisPageInt > 9) {
+            temp = Integer.toString(thisPageInt -10);
+            String splitTemp = temp.substring(0, temp.length() - 1);
+            splitTemp += '1';
+            temp = splitTemp;
+        } else {
+            temp = "1";
         }
+
+        List<PageNumDto> pNum = new ArrayList<>();
+
+        for (int i = Integer.parseInt(temp); i < Integer.parseInt(temp) + 10; i++) {
+            PageNumDto pageNumDto = new PageNumDto();
+            pageNumDto.setNum(i);
+            pNum.add(pageNumDto);
+            if (i > allNum) {
+                break;
+            }
+        }
+
+        pagesDto.setNum(pNum);
+
+
+        return pagesDto;
     }
 
     @Transactional
@@ -69,34 +103,25 @@ public class PostsService {
 
     //TODO db셀렉트 테스트코드 공부후 테스트코드 작성
     @Transactional(readOnly = true)
-    public List<List<WordsResponseDto>> findWords() {
-        List<WordsResponseDto> words = new ArrayList<>();
-        List<List<WordsResponseDto>> dividedByColumnWords = new ArrayList<>();
+    public List<List<KorWordsResponseDto>> findWords(int thisPage) {
+        List<KorWordsResponseDto> words = new ArrayList<>();
+        List<List<KorWordsResponseDto>> dividedByColumnWords = new ArrayList<>();
 
-        if (korWordsPostsRepository.findKorWords().size() != 0) {
-            List<WordsResponseDto> korWordList = korWordsPostsRepository.findKorWords().stream()
-                    .map(WordsResponseDto::new)
-                    .collect(Collectors.toList());
+        List<KorWordsResponseDto> korWordList = mapper.getCon(thisPage * 30 - 29, thisPage * 30);
 
-            List<WordsResponseDto> japWordList = japWordsPostsRepository.findJapWords().stream()
-                    .map(WordsResponseDto::new)
-                    .collect(Collectors.toList());
+        words.addAll(korWordList);
 
-            words.addAll(korWordList);
-            words.addAll(japWordList);
+        int wordsColumnSize = words.size() / 3;
 
-            int wordsColumnSize = words.size()/3;
-
-            dividedByColumnWords.add(words.subList(0, wordsColumnSize));
-            dividedByColumnWords.add(words.subList(wordsColumnSize, wordsColumnSize * 2));
-            dividedByColumnWords.add(words.subList(wordsColumnSize * 2, words.size()));
-        }
+        dividedByColumnWords.add(words.subList(0, wordsColumnSize));
+        dividedByColumnWords.add(words.subList(wordsColumnSize, wordsColumnSize * 2));
+        dividedByColumnWords.add(words.subList(wordsColumnSize * 2, words.size()));
 
         return dividedByColumnWords;
     }
 
     @Transactional
-    public void delete (Long id) {
+    public void delete(Long id) {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new
                 IllegalArgumentException("해당 게시글이 없습니다.=" + id));
         postsRepository.delete(posts);

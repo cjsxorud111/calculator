@@ -2,7 +2,8 @@
 <div class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
     <div class="container">
         <a href="../" class="navbar-brand">신조어 사전</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -11,9 +12,11 @@
                     <a class="nav-link" href="https://blog.bootswatch.com">Blog</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Sketchy <span class="caret"></span></a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Sketchy <span
+                            class="caret"></span></a>
                     <div class="dropdown-menu" aria-labelledby="download">
-                        <a class="dropdown-item" target="_blank" href="https://jsfiddle.net/bootswatch/gbuemo39/">Open in JSFiddle</a>
+                        <a class="dropdown-item" target="_blank" href="https://jsfiddle.net/bootswatch/gbuemo39/">Open
+                            in JSFiddle</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="../4/sketchy/bootstrap.min.css" download>bootstrap.min.css</a>
                         <a class="dropdown-item" href="../4/sketchy/bootstrap.css" download>bootstrap.css</a>
@@ -24,7 +27,8 @@
                 </li>
                 <li class="nav-item">
                     <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control" type="text" id="inputDefault" style="=width: 5m00px;" placeholder="Search">
+                        <input class="form-control" type="text" id="inputDefault" style="=width: 5m00px;"
+                               placeholder="Search">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </li>
@@ -34,7 +38,7 @@
 </div>
 
 <div class="container" style="margin-top: 5rem;">
-    <div class ="bs-docs-section">
+    <div class="bs-docs-section">
         <div class="row">
             <div class="col-lg-4">
                 {{#firstColumn}}
@@ -57,6 +61,7 @@
                         </div>
                     </div>
                 {{/secondColumn}}
+
             </div>
             <div class="col-lg-4">
                 {{#thirdColumn}}
@@ -71,5 +76,27 @@
             </div>
         </div>
     </div>
+    <div>
+        <ul class="pagination pagination-lg">
+            <li class="page-item {{firstArrowActive}}">
+                <a class="page-link" id="previousPages" href="/main?page={{previousPages}}">&laquo;</a>
+            </li>
+            {{#pageNum}}
+                <li class="page-item">
+                    <a class="page-link" id="page{{num}}" href="/main?page={{num}}">{{num}}</a>
+                </li>
+            {{/pageNum}}
+            <li class="page-item {{lastArrowActive}}">
+                <a class="page-link" id="afterPages" href="/main?page={{afterPages}}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+
     {{>layout/footer}}
 </div>
+<script>
+    document.getElementById("previous").onclick = function() {
+
+    }
+
+</script>
