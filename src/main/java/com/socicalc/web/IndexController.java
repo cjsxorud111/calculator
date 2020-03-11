@@ -27,6 +27,14 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/word")
+    public String word(Model model, HttpServletRequest request) {
+        String definedWord = request.getParameter("mean");
+        model.addAttribute("word", postsService.getDefinedWord(definedWord));
+        System.out.println("검색할 단어: " + definedWord);
+        return "word";
+    }
+
     @GetMapping("/main")
     public String main(Model model, HttpServletRequest request) {
         //TODO 회원가입기능 추가할 때 오류 수정 후 사용
@@ -66,15 +74,15 @@ public class IndexController {
         model.addAttribute("secondColumn", words.get(1));
         model.addAttribute("thirdColumn", words.get(2));
 
-        model.addAttribute("previousPages", num.getNum().get(0).getNum() - 1);
-        model.addAttribute("afterPages", num.getNum().get(num.getNum().size() - 1).getNum() + 1);
+        model.addAttribute("previousPages", num.getNum().get(0).getNumm() - 1);
+        model.addAttribute("afterPages", num.getNum().get(num.getNum().size() - 1).getNumm() + 1);
 
         String numToString = Integer.toString(num.getAllNum());
 
         String lastPageNum = numToString.substring(0, numToString.length() - 1);
         lastPageNum += 0;
         int lastIntPageNum = Integer.parseInt(lastPageNum);
-        model.addAttribute("pageNum", num.getNum());
+        model.addAttribute("pageNum", num);
 
         if (thisPageInt <= 10) {
             model.addAttribute("firstArrowActive", "disabled");

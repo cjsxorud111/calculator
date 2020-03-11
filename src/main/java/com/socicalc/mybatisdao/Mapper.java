@@ -1,5 +1,6 @@
 package com.socicalc.mybatisdao;
 
+import com.socicalc.web.dto.DefinedWordsResponseDto;
 import com.socicalc.web.dto.KorWordsResponseDto;
 import org.apache.ibatis.annotations.Select;
 
@@ -12,4 +13,7 @@ public interface Mapper {
 
     @Select("select count(*) from kor_words_posts")
     int getPageNum();
+
+    @Select("select * from kor_words_posts where title = #{definedWord}")
+    List<DefinedWordsResponseDto> getDefinedWord(String definedWord);
 }

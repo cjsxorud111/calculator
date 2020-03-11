@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PageNumDto {
-    int num;
+    int numm;
+    String active;
 }

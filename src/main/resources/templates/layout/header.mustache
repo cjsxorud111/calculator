@@ -2,7 +2,55 @@
 <html>
 <head>
     <title>스프링부트 웹서비스</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/sketchy/bootstrap.min.css">
+    <script>
+        function searchWord() {
+            var word = $('#inputDefault').serialize();
+            word = decodeURIComponent(word);
+            var uri = "/word?";
+            uri += word;
+            uri += '%C2%A0';
+            window.location.href = uri;
+        }
+    </script>
 </head>
 <body>
+<div class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+    <div class="container" style="text-align: center;">
+        <a href="/main" class="navbar-brand">신조어 사전</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive"
+             style="text-align: center; border: 1px solid mediumvioletred;">
+            <ul class="navbar-nav" style="border: 1px solid red;">
+                <!-- <li class="nav-item">
+                     <a class="nav-link" href="https://blog.bootswatch.com">Blog</a>
+                 </li>
+                 <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Sketchy <span
+                             class="caret"></span></a>
+                     <div class="dropdown-menu" aria-labelledby="download">
+                         <a class="dropdown-item" target="_blank" href="https://jsfiddle.net/bootswatch/gbuemo39/">Open
+                             in JSFiddle</a>
+                         <div class="dropdown-divider"></div>
+                         <a class="dropdown-item" href="../4/sketchy/bootstrap.min.css" download>bootstrap.min.css</a>
+                         <a class="dropdown-item" href="../4/sketchy/bootstrap.css" download>bootstrap.css</a>
+                         <div class="dropdown-divider"></div>
+                         <a class="dropdown-item" href="../4/sketchy/_variables.scss" download>_variables.scss</a>
+                         <a class="dropdown-item" href="../4/sketchy/_bootswatch.scss" download>_bootswatch.scss</a>
+                     </div>
+                 </li>-->
+                <li class="nav-item">
+                    <div class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="text" id="inputDefault" style="width: 24rem;"
+                               placeholder="Search" name="mean">
+                        <button class="btn btn-secondary my-2 my-sm-0" onclick="searchWord()" type="submit">Search</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -64,8 +64,13 @@ public class PostsService {
 
         for (int i = Integer.parseInt(temp); i < Integer.parseInt(temp) + 10; i++) {
             PageNumDto pageNumDto = new PageNumDto();
-            pageNumDto.setNum(i);
+            pageNumDto.setNumm(i);
             pNum.add(pageNumDto);
+            if (thisPageInt != i) {
+                pageNumDto.setActive("");
+            } else {
+                pageNumDto.setActive("active");
+            }
             if (i > allNum) {
                 break;
             }
@@ -125,5 +130,9 @@ public class PostsService {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new
                 IllegalArgumentException("해당 게시글이 없습니다.=" + id));
         postsRepository.delete(posts);
+    }
+
+    public List<DefinedWordsResponseDto> getDefinedWord(String definedWord) {
+        return mapper.getDefinedWord(definedWord);
     }
 }
