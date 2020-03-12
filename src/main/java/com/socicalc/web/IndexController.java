@@ -23,7 +23,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("posts", postsService.findAllDesc());
+        //model.addAttribute("posts", postsService.findAllDesc());
         return "index";
     }
 
