@@ -2,16 +2,16 @@
 
 <div class="container" style="margin-top: 5rem;">
     <div class="bs-docs-section">
-        <div class="row">
+        <div class="row" id="contents">
             <div class="col-lg-4">
                 {{#firstColumn}}
                     <div class="card border-primary mb-3" style="max-width: 20rem;">
                         <div class="card-header">{{title}}</div>
                         <a href="/word?mean={{title}}" class="cont" style="text-decoration: none;">
-                            <div class="card-body">
-                                <!--<h4 class="card-title">{{id}}</h4>-->
-                                <p class="card-text">{{content}}</p>
-                            </div>
+                        <div class="card-body">
+                            <!--<h4 class="card-title">{{id}}</h4>-->
+                            <p class="card-text">{{content}}</p>
+                        </div>
                         </a>
                     </div>
                 {{/firstColumn}}
@@ -21,10 +21,10 @@
                     <div class="card border-primary mb-3" style="max-width: 20rem;">
                         <div class="card-header">{{title}}</div>
                         <a href="/word?mean={{title}}" class="cont" style="text-decoration: none;">
-                            <div class="card-body">
-                                <!--<h4 class="card-title">{{id}}</h4>-->
-                                <p class="card-text">{{content}}</p>
-                            </div>
+                        <div class="card-body">
+                            <!--<h4 class="card-title">{{id}}</h4>-->
+                            <p class="card-text">{{content}}</p>
+                        </div>
                         </a>
                     </div>
                 {{/secondColumn}}
@@ -35,19 +35,21 @@
                     <div class="card border-primary mb-3" style="max-width: 20rem;">
                         <div class="card-header">{{title}}</div>
                         <a href="/word?mean={{title}}" class="cont" style="text-decoration: none;">
-                            <div class="card-body">
-                                <!--<h4 class="card-title">{{id}}</h4>-->
-                                <p class="card-text">{{content}}</p>
-                            </div>
+                        <div class="card-body">
+                            <!--<h4 class="card-title">{{id}}</h4>-->
+                            <p class="card-text">{{content}}</p>
+                        </div>
                         </a>
                     </div>
                 {{/thirdColumn}}
             </div>
         </div>
     </div>
-    <div style="text-align: center; border: 1px solid blue;">
-        <span style="border: 1px solid red;">
+    <div id="paging">
+        <div class="test1">&nbsp;</div>
+        <div class="pages">
             <ul class="pagination pagination-lg">
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
                 <li class="page-item {{firstArrowActive}}">
                     <a class="page-link" id="previousPages" href="/main?page={{previousPages}}">&laquo;</a>
                 </li>
@@ -60,16 +62,32 @@
                     <a class="page-link" id="afterPages" href="/main?page={{afterPages}}">&raquo;</a>
                 </li>
             </ul>
-        </span>
+        </div>
+        <div class="test1">&nbsp;</div>
     </div>
-
     {{>layout/footer}}
 </div>
-<br><br><br><br><br><br>
-<div style="border: 1px solid rebeccapurple; text-align: center;"><span
-        style="border: 1px solid red; width: 100px;"></span></div>
+
 <style>
     .cont:hover {
         background-color: #E0E0E0
+    }
+
+    .pages {
+        flex-grow: 0.5;
+    }
+
+    .test1 {
+        flex-grow: 3.5;
+    }
+
+    #paging {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #contents {
+        font-family: 'Yeon Sung', cursive;
+        font-size: larger;
     }
 </style>
