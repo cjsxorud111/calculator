@@ -6,7 +6,14 @@
             <div class="col-lg-4">
                 {{#firstColumn}}
                     <div class="card border-primary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">{{title}}</div>
+                        <div class="card-header">
+                            <div>{{title}}</div>
+                            <div class="recommend-section">
+                                <span id="recommend_count_{{id}}">{{recommendation_count}} </span>
+                                <a href="" class="recommend-icon" id="recommend-id-{{id}}"
+                                   onclick="recommendation({{id}})">♡</a>
+                            </div>
+                        </div>
                         <a href="/word?mean={{title}}" class="cont" style="text-decoration: none;">
                         <div class="card-body">
                             <!--<h4 class="card-title">{{id}}</h4>-->
@@ -19,7 +26,14 @@
             <div class="col-lg-4">
                 {{#secondColumn}}
                     <div class="card border-primary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">{{title}}</div>
+                        <div class="card-header">
+                            <div>{{title}}</div>
+                            <div class="recommend-section">
+                                <span id="recommend_count_{{id}}">{{recommendation_count}} </span>
+                                <a href="" class="recommend-icon" id="recommend-id-{{id}}"
+                                   onclick="recommendation({{id}})">♡</a>
+                            </div>
+                        </div>
                         <a href="/word?mean={{title}}" class="cont" style="text-decoration: none;">
                         <div class="card-body">
                             <!--<h4 class="card-title">{{id}}</h4>-->
@@ -28,12 +42,18 @@
                         </a>
                     </div>
                 {{/secondColumn}}
-
             </div>
             <div class="col-lg-4">
                 {{#thirdColumn}}
                     <div class="card border-primary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">{{title}}</div>
+                        <div class="card-header">
+                            <div>{{title}}</div>
+                            <div class="recommend-section">
+                                <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
+                                <a href="" class="recommend-icon" id="recommend-id-{{id}}"
+                                   onclick="recommendation({{id}})">♡</a>
+                            </div>
+                        </div>
                         <a href="/word?mean={{title}}" class="cont" style="text-decoration: none;">
                         <div class="card-body">
                             <!--<h4 class="card-title">{{id}}</h4>-->
@@ -68,6 +88,27 @@
     {{>layout/footer}}
 </div>
 
+<script>
+    function recommendation(contentid) {
+        $.ajax({
+            type : "post",
+            url : '/api/v1/recommendation',
+            dataType : "json",
+            data : {
+                contentid : contentid,
+            },
+            error : function(e) {
+                console.log(JSON.stringify(e));
+            },
+            success : function(Parse_data) {
+                console.log(JSON.stringify(Parse_data));
+
+            }
+        });
+    };
+
+</script>
+
 <style>
     .cont:hover {
         background-color: #E0E0E0
@@ -90,4 +131,28 @@
         font-family: 'Yeon Sung', cursive;
         font-size: larger;
     }
+
+    .card-header {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .recommend-section {
+        text-align: right;
+        flex-grow: 1;
+    }
+
+    .recommend-icon:hover {
+        font-size: 21px;
+        font-weight: bold;
+    }
+
+    .recommend-icon:link {
+        text-decoration: none;
+    }
+
+    .recommend-icon:visited {
+        text-decoration: none;
+    }
+
 </style>

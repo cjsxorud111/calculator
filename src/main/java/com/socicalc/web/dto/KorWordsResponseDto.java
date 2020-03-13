@@ -10,5 +10,6 @@ public class KorWordsResponseDto {
     private Long id;
     private String title;
     private String content;
+    private String recommendation_count;
 
 }

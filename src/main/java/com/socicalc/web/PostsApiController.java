@@ -8,11 +8,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+
 @RequiredArgsConstructor
 @Controller
 public class PostsApiController {
 
     private final PostsService postsService;
+
+    @PostMapping(value = "/api/v1/recommendation", produces = "application/json")
+    public @ResponseBody HashMap<String, String> recommendation(HttpServletRequest request) {
+
+        String contentid = request.getParameter("contentid");
+        postsService.updateRecommendation(contentid);
+        HashMap<String, String> hashMap = new HashMap<>();
+        return hashMap;
+    }
 
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto) {

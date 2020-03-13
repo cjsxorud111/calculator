@@ -135,4 +135,8 @@ public class PostsService {
     public List<DefinedWordsResponseDto> getDefinedWord(String definedWord) {
         return mapper.getDefinedWord(definedWord);
     }
+
+    public void updateRecommendation(String contentid) {
+        mapper.updateRecommendation(contentid);
+    }
 }
