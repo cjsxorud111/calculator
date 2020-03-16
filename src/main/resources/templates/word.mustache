@@ -1,26 +1,180 @@
 {{>layout/header}}
 
-<div class="container" style="margin-top: 5rem;">
-    <div class="bs-docs-section">
-        <div class="row">
-
-            <div style="border: 1px solid red; margin-bottom: 77rem;">
-                {{#word}}
-                    <div class="card border-primary mb-3" style="width: 55rem; margin-left: 10rem; margin-top: 4rem;">
-                        <div class="card-header" style="font-size: 20px;">{{title}}</div>
-                        <a href="#" class="cont" style="text-decoration: none;">
-                            <div class="card-body">
-                                <!--<h4 class="card-title">{{id}}</h4>-->
-                                <p class="card-text" style="font-size: 20px;">
-                                    {{content}}
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                {{/word}}
+<div style="font-family: 'Yeon Sung', cursive;">
+    <div class="card border-primary mb-3">
+        <div class="card-header" style="font-size: 20px;"></div>
+        <div class="cont" id="new-word-btn"
+             onclick="redirect_define_page();"
+             style="text-decoration: none;">
+            <div class="card-body">
+                <p class="card-text" style="font-size: 20px; text-align: center;">
+                    새 정의 추가 +
+                </p>
             </div>
-
         </div>
     </div>
-    {{>layout/footer}}
+
+    {{#word}}
+        <div class="card border-primary mb-3">
+            <div class="card-header" style="font-size: 20px;">
+                <div>{{title}}</div>
+                <div class="recommend-section">
+                    <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
+                    <span class="recommend-icon" id="recommend-id-{{id}}"
+                          onclick="recommendation({{id}})">♡</span>
+                    <input type="hidden" id="hidden-id-value" value="{{id}}">
+                </div>
+            </div>
+            <div class="cont"
+                 style="text-decoration: none;">
+                <div class="card-body">
+                    <p class="card-text" style="font-size: 20px;">
+                        {{content}}
+                    </p>
+                </div>
+                <div style="margin-top: 6px;">
+                    <span id="modify-btn" style="font-size: 17px; margin-right: 10px;">수정</span>
+                    <span id="delete-btn"
+                          onclick="delete_password_check({{id}});"
+                          style="font-size: 17px; margin-right: 10px;">삭제</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal"
+             id="delete-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-family: 'Yeon Sung', cursive; font-size: 20px;">비밀번호 입력</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control"
+                               id="input-password" placeholder="비밀번호"
+                               style="font-family: 'Yeon Sung', cursive; font-size: 20px;">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                                style="font-family: 'Yeon Sung', cursive; font-size: 18px;"
+                                onclick="delete_word();">삭제
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                                style="font-family: 'Yeon Sung', cursive; font-size: 18px;"
+                                data-dismiss="modal">취소
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="hidden-for-modal"></div>
+    {{/word}}
+
 </div>
+
+<div id="for-footer-interval"></div>
+<style>
+    #modify-btn:hover {
+        cursor: pointer;
+    }
+
+    #delete-btn:hover {
+        cursor: pointer;
+    }
+
+    #for-footer-interval {
+        margin-top: 30rem;
+    }
+
+    #new-word-btn:hover {
+        font-size: 21px;
+        background-color: #E0E0E0;
+        cursor: pointer;
+    }
+
+    .cont {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .card-header {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .recommend-section {
+        text-align: right;
+        flex-grow: 1;
+    }
+
+    .recommend-icon:hover {
+        font-size: 21px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .recommend-icon:link {
+        text-decoration: none;
+    }
+
+    .recommend-icon:visited {
+        text-decoration: none;
+    }
+</style>
+<script>
+    function delete_password_check(id) {
+        $('#delete-modal').modal();
+
+        var hidden = "<input type='hidden' id='modal-hidden-id' value='" + id + "'>";
+        $('#hidden-for-modal').html(hidden);
+    }
+
+    function delete_word() {
+        var delete_password = $('#input-password').val();
+        var word_id = $('#modal-hidden-id').val();
+        $.ajax({
+            type: "post",
+            url: '/api/v1/delete_word',
+            dataType: "json",
+            data: {
+                word_id: word_id,
+                delete_password: delete_password
+            },
+            error: function (e) {
+                console.log(e);
+            },
+            success: function (parse_data) {
+                window.location.reload();
+            }
+        });
+    };
+
+    function redirect_define_page() {
+        var param = getParam('mean');
+        window.location.href = '/define?word=' + param;
+    };
+
+    function recommendation(contentid) {
+        $.ajax({
+            type: "post",
+            url: '/api/v1/recommendation',
+            dataType: "json",
+            data: {
+                contentid: contentid,
+            },
+            error: function (e) {
+                console.log(e);
+            },
+            success: function (Parse_data) {
+                console.log('success' + JSON.stringify(Parse_data));
+                var conid = 'recommend-count-' + contentid;
+                var num = document.getElementById(conid).innerHTML;
+                var addNum = Number(num) + 1;
+                document.getElementById(conid).innerHTML = addNum;
+            }
+        });
+    };
+</script>
+{{>layout/footer}}

@@ -42,7 +42,7 @@ public class PostsService {
     @Transactional
     public PagesDto getPageNum(int thisPageInt) {
         PagesDto pagesDto = new PagesDto();
-        int allNum = mapper.getPageNum()/30;
+        int allNum = mapper.getPageNum() / 30;
         pagesDto.setAllNum(allNum);
 
         String temp = Integer.toString(thisPageInt);
@@ -52,7 +52,7 @@ public class PostsService {
             splitTemp += '1';
             temp = splitTemp;
         } else if (thisPageInt > 9) {
-            temp = Integer.toString(thisPageInt -10);
+            temp = Integer.toString(thisPageInt - 10);
             String splitTemp = temp.substring(0, temp.length() - 1);
             splitTemp += '1';
             temp = splitTemp;
@@ -138,5 +138,20 @@ public class PostsService {
 
     public void updateRecommendation(String contentid) {
         mapper.updateRecommendation(contentid);
+    }
+
+    public void defineNewDefineWord(DefineNewWordsRequestDto defineNewWordsRequestDto) {
+        mapper.defineNewDefineWord(defineNewWordsRequestDto);
+    }
+
+    public void deleteWord(int wordId) {
+        mapper.deleteWord(wordId);
+    }
+
+    public boolean passwordCheck(int id, String sendedPassword) {
+        System.out.println("비번체크컨트롤러");
+        String selectedPassword = mapper.getPassword(id);
+        System.out.println(id + " " + selectedPassword + " " + sendedPassword);
+        return selectedPassword.equals(sendedPassword);
     }
 }

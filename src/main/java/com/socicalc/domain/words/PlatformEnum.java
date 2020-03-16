@@ -5,5 +5,6 @@ package com.socicalc.domain.words;
  */
 public enum PlatformEnum {
     KORWIKI,
-    JAPWIKI
+    JAPWIKI,
+    USER
 }

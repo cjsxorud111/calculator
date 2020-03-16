@@ -27,20 +27,23 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/define")
+    public String define(Model model) {
+        return "define";
+    }
+
     @GetMapping("/word")
     public String word(Model model, HttpServletRequest request) {
         String definedWord = request.getParameter("mean");
-        model.addAttribute("word", postsService.getDefinedWord(definedWord));
         System.out.println("검색할 단어: " + definedWord);
+        model.addAttribute("word", postsService.getDefinedWord(definedWord));
         return "word";
     }
 
     @GetMapping("/main")
     public String main(Model model, HttpServletRequest request) {
         //TODO 회원가입기능 추가할 때 오류 수정 후 사용
-        System.out.println("서버오류 확인로그");
         /*SessionUser user = (User) httpSession.getAttribute("user");
-
         if (user != null) {
             model.addAttribute("userName", user.getName());
         }*/
