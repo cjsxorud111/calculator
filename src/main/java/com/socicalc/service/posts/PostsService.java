@@ -112,7 +112,7 @@ public class PostsService {
         List<KorWordsResponseDto> words = new ArrayList<>();
         List<List<KorWordsResponseDto>> dividedByColumnWords = new ArrayList<>();
 
-        List<KorWordsResponseDto> korWordList = mapper.getCon(thisPage * 30 - 29, thisPage * 30);
+        List<KorWordsResponseDto> korWordList = mapper.getCon(thisPage * 30 - 30, thisPage * 30);
 
         words.addAll(korWordList);
 

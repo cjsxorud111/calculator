@@ -12,7 +12,7 @@ import java.util.List;
 
 @org.apache.ibatis.annotations.Mapper
 public interface Mapper {
-    @Select("select * from kor_words_posts order by recommendation_count desc limit 30")
+    @Select("select * from kor_words_posts order by recommendation_count desc limit 29 offset #{firstContentId}")
     List<KorWordsResponseDto> getCon(int firstContentId, int lastContentId);
 
     @Select("select count(*) from kor_words_posts")
