@@ -18,17 +18,26 @@ public interface Mapper {
     @Select("select count(*) from kor_words_posts")
     int getPageNum();
 
-    @Select("select * from kor_words_posts where title = #{definedWord}")
-    List<DefinedWordsResponseDto> getDefinedWord(String definedWord);
+    @Select("select * from kor_words_posts where dividedword like concat(#{dividedDefinedWord, jdbcType=VARCHAR}, '%')")
+    List<DefinedWordsResponseDto> getDefinedWord(String dividedDefinedWord);
 
     @Select("select password from kor_words_posts where id = #{id}")
     String getPassword(int id);
 
-    @Insert("insert into kor_words_posts (content, platform, title, password) values (#{tarea}, #{platform}, #{title}, #{password})")
+    @Select("select * from kor_words_posts where dividedword like concat(#{word, jdbcType=VARCHAR}, '%')")
+    List<DefinedWordsResponseDto> searchAutoComplete(String word);
+
+    @Insert("insert into kor_words_posts (content, platform, title, password, dividedWord) values (#{tarea}, #{platform}, #{title}, #{password}, #{dividedWord})")
     void defineNewDefineWord(DefineNewWordsRequestDto defineNewWordsRequestDto);
 
     @Update("update kor_words_posts set recommendation_count = recommendation_count + 1 where id = #{contentid}")
     void updateRecommendation(String contentid);
+
+    @Select("select * from kor_words_posts")
+    List<DefinedWordsResponseDto> getForDivideWord();
+
+    @Update("update kor_words_posts set dividedword = #{dividedWord} where id = #{id}")
+    void updateDividedWord(String dividedWord, int id);
 
     @Delete("delete from kor_words_posts where id = #{wordId}")
     void deleteWord(int wordId);

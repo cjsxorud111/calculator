@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DefinedWordsResponseDto {
-    private Long id;
+    private int id;
     private String title;
     private String content;
     private String recommendation_count;

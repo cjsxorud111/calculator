@@ -11,4 +11,5 @@ public class DefineNewWordsRequestDto {
     private String tarea;
     private String password;
     private PlatformEnum platform;
+    private String dividedWord;
 }

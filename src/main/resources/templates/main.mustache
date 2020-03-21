@@ -1,93 +1,107 @@
 {{>layout/header}}
 
 
-    <div class="bs-docs-section">
-        <div class="row" id="contents">
-            <div class="col-lg-4">
-                {{#firstColumn}}
-                    <div class="card border-primary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">
-                            <div>{{title}}</div>
-                            <div class="recommend-section">
-                                <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
-                                <span class="recommend-icon" id="recommend-id-{{id}}"
-                                      onclick="recommendation({{id}})">♡</span>
-                            </div>
+<div class="bs-docs-section">
+    <div class="row" id="contents">
+        <div class="col-lg-4">
+            {{#firstColumn}}
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header">
+                        <div id="word-title-{{id}}">{{title}}</div>
+                        <div class="recommend-section">
+                            <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
+                            <span class="recommend-icon" id="recommend-id-{{id}}"
+                                  onclick="recommendation({{id}})">♡</span>
                         </div>
-                        <a href="/word?mean={{title}}" class="cont" style="text-decoration: none;">
+                    </div>
+
+                    <a href="javascript:search_the_word({{id}})" class="cont" id="content-id-{{id}}">
                         <div class="card-body">
                             <p class="card-text">{{content}}</p>
                         </div>
-                        </a>
-                    </div>
-                {{/firstColumn}}
-            </div>
-            <div class="col-lg-4">
-                {{#secondColumn}}
-                    <div class="card border-primary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">
-                            <div>{{title}}</div>
-                            <div class="recommend-section">
-                                <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
-                                <span class="recommend-icon" id="recommend-id-{{id}}"
-                                      onclick="recommendation({{id}})">♡</span>
-                            </div>
+                    </a>
+                </div>
+            {{/firstColumn}}
+        </div>
+        <div class="col-lg-4">
+            {{#secondColumn}}
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header">
+                        <div id="word-title-{{id}}">{{title}}</div>
+                        <div class="recommend-section">
+                            <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
+                            <span class="recommend-icon" id="recommend-id-{{id}}"
+                                  onclick="recommendation({{id}})">♡</span>
                         </div>
-                        <a href="/word?mean={{title}}" class="cont" style="text-decoration: none;">
+                    </div>
+
+                    <a href="javascript:search_the_word({{id}})" class="cont" id="content-id-{{id}}">
                         <div class="card-body">
                             <p class="card-text">{{content}}</p>
                         </div>
-                        </a>
-                    </div>
-                {{/secondColumn}}
-            </div>
-            <div class="col-lg-4">
-                {{#thirdColumn}}
-                    <div class="card border-primary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">
-                            <div>{{title}}</div>
-                            <div class="recommend-section">
-                                <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
-                                <span class="recommend-icon" id="recommend-id-{{id}}"
-                                      onclick="recommendation({{id}})">♡</span>
-                            </div>
+                    </a>
+                </div>
+            {{/secondColumn}}
+        </div>
+
+        <div class="col-lg-4">
+            {{#thirdColumn}}
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header">
+                        <div id="word-title-{{id}}">{{title}}</div>
+                        <div class="recommend-section">
+                            <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
+                            <span class="recommend-icon" id="recommend-id-{{id}}"
+                                  onclick="recommendation({{id}})">♡</span>
                         </div>
-                        <a href="/word?mean={{title}}" class="cont" style="text-decoration: none;">
+                    </div>
+
+                    <a href="javascript:search_the_word({{id}})" class="cont" id="content-id-{{id}}">
                         <div class="card-body">
-                            <!--<h4 class="card-title">{{id}}</h4>-->
                             <p class="card-text">{{content}}</p>
                         </div>
-                        </a>
-                    </div>
-                {{/thirdColumn}}
-            </div>
+                    </a>
+                </div>
+
+            {{/thirdColumn}}
         </div>
     </div>
-    <div id="paging">
-        <div class="test1">&nbsp;</div>
-        <div class="pages">
-            <ul class="pagination pagination-lg">
-                <li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                <li class="page-item {{firstArrowActive}}">
-                    <a class="page-link" id="previousPages" href="/main?page={{previousPages}}">&laquo;</a>
+</div>
+<div id="paging">
+    <div class="test1">&nbsp;</div>
+    <div class="pages">
+        <ul class="pagination pagination-lg">
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+            <li class="page-item {{firstArrowActive}}">
+                <a class="page-link" id="previousPages" href="/main?page={{previousPages}}">&laquo;</a>
+            </li>
+            {{#pageNum.num}}
+                <li class="page-item {{active}}">
+                    <a class="page-link" id="page{{numm}}" href="/main?page={{numm}}">{{numm}}</a>
                 </li>
-                {{#pageNum.num}}
-                    <li class="page-item {{active}}">
-                        <a class="page-link" id="page{{numm}}" href="/main?page={{numm}}">{{numm}}</a>
-                    </li>
-                {{/pageNum.num}}
-                <li class="page-item {{lastArrowActive}}">
-                    <a class="page-link" id="afterPages" href="/main?page={{afterPages}}">&raquo;</a>
-                </li>
-            </ul>
-        </div>
-        <div class="test1">&nbsp;</div>
+            {{/pageNum.num}}
+            <li class="page-item {{lastArrowActive}}">
+                <a class="page-link" id="afterPages" href="/main?page={{afterPages}}">&raquo;</a>
+            </li>
+        </ul>
     </div>
+    <div class="test1">&nbsp;</div>
+</div>
 
 {{>layout/footer}}
 
 <script>
+
+    function search_the_word(title) {
+        var idcss = '#word-title-' + title;
+        var content = $(idcss).html();
+
+        window.location.href = '/word?mean=' + encodeURI(content);
+    }
+
     window.onload = function () {
+        $('#auto-complete-section').hide();
+
         $.ajax({
             type: 'GET',
             url: '/api/v1/main-paging',
@@ -125,6 +139,10 @@
 </script>
 
 <style>
+    .cont {
+        text-decoration: none;
+    }
+
     .cont:hover {
         background-color: #E0E0E0
     }

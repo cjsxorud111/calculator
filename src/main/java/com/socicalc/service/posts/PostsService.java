@@ -3,6 +3,7 @@ package com.socicalc.service.posts;
 import com.socicalc.domain.posts.KorWordsPostsRepository;
 import com.socicalc.domain.posts.Posts;
 import com.socicalc.domain.posts.PostsRepository;
+import com.socicalc.domain.words.KoreanWordDivide;
 import com.socicalc.domain.words.WordCrawler;
 import com.socicalc.mybatisdao.Mapper;
 import com.socicalc.web.dto.*;
@@ -153,5 +154,20 @@ public class PostsService {
         String selectedPassword = mapper.getPassword(id);
         System.out.println(id + " " + selectedPassword + " " + sendedPassword);
         return selectedPassword.equals(sendedPassword);
+    }
+
+    public List<DefinedWordsResponseDto> searchAutoComplete(String word) {
+
+        System.out.println(KoreanWordDivide.toKoJaso(word));
+        return mapper.searchAutoComplete(KoreanWordDivide.toKoJaso(word));
+    }
+
+    public void updateDividedWord() {
+        List<DefinedWordsResponseDto> dividedByColumnWords = mapper.getForDivideWord();
+        KoreanWordDivide koreanWordDivide = new KoreanWordDivide();
+        for (DefinedWordsResponseDto i : dividedByColumnWords) {
+            String dividedWord = koreanWordDivide.toKoJaso(i.getTitle());
+            mapper.updateDividedWord(dividedWord, i.getId());
+        }
     }
 }

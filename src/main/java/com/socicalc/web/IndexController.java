@@ -1,5 +1,6 @@
 package com.socicalc.web;
 
+import com.socicalc.domain.words.KoreanWordDivide;
 import com.socicalc.service.posts.PostsService;
 import com.socicalc.web.dto.KorWordsResponseDto;
 import com.socicalc.web.dto.PagesDto;
@@ -23,9 +24,7 @@ public class IndexController {
     private final PostsService postsService;
 
     @GetMapping("/")
-    public String index() {
-        return "index";
-    }
+    public String index() { return "index"; }
 
     @GetMapping("/define")
     public String define() {
@@ -34,10 +33,11 @@ public class IndexController {
 
     @GetMapping("/word")
     public String word(Model model, HttpServletRequest request) {
+        System.out.println("test"+"gggg");
         String definedWord = request.getParameter("mean");
         logger.debug("검색할 단어: {}", definedWord);
-
-        model.addAttribute("word", postsService.getDefinedWord(definedWord));
+        String divided = KoreanWordDivide.toKoJaso(definedWord);
+        model.addAttribute("word", postsService.getDefinedWord(divided));
         return "word";
     }
 
