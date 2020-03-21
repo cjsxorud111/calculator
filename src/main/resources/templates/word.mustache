@@ -32,11 +32,14 @@
                         {{content}}
                     </p>
                 </div>
-                <div style="margin-top: 6px;">
-                    <span id="modify-btn" style="font-size: 17px; margin-right: 10px;">수정</span>
-                    <span id="delete-btn"
-                          onclick="delete_password_check({{id}});"
-                          style="font-size: 17px; margin-right: 10px;">삭제</span>
+                <div style="margin-top: 6px; border: 1px solid red; width: 6rem; text-align: right;">
+                    <div style="float: left; border: 1px solid red; width: 6rem;">
+                        <span id="modify-btn" style="font-size: 17px; margin-right: 10px;">수정</span>
+                        <span id="delete-btn"
+                             onclick="delete_password_check({{id}});"
+                             style="font-size: 17px; margin-right: 10px;">삭제
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,6 +79,7 @@
 
 <div id="for-footer-interval"></div>
 <style>
+
     #modify-btn:hover {
         cursor: pointer;
     }
