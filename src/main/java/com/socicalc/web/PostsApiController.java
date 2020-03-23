@@ -59,6 +59,23 @@ public class PostsApiController {
         return hashMap;
     }
 
+    @PostMapping(value = "/api/v1/modify_word", produces = "application/json")
+    public @ResponseBody HashMap<String, String> modifyWord(HttpServletRequest request) {
+        DefineNewWordsRequestDto defineNewWordsRequestDto = new DefineNewWordsRequestDto();
+        String word = request.getParameter("word");
+        String dividedWord = KoreanWordDivide.toKoJaso(word);
+        String id = request.getParameter("id");
+        String tarea = request.getParameter("tarea");
+        defineNewWordsRequestDto.setTitle(word);
+        defineNewWordsRequestDto.setId(id);
+        defineNewWordsRequestDto.setTarea(tarea);
+        defineNewWordsRequestDto.setDividedWord(dividedWord);
+
+        postsService.modifyWord(defineNewWordsRequestDto);
+        HashMap<String, String> hashMap = new HashMap<>();
+        return hashMap;
+    }
+
     @PostMapping(value = "/api/v1/define_word", produces = "application/json")
     public @ResponseBody HashMap<String, String> defineNewWord(HttpServletRequest request) {
         DefineNewWordsRequestDto defineNewWordsRequestDto = new DefineNewWordsRequestDto();
@@ -73,7 +90,6 @@ public class PostsApiController {
         defineNewWordsRequestDto.setPlatform(PlatformEnum.USER);
         defineNewWordsRequestDto.setDividedWord(dividedWord);
 
-        System.out.println("어디잘됫냐" + tarea + "word" +password);
         postsService.defineNewDefineWord(defineNewWordsRequestDto);
         HashMap<String, String> hashMap = new HashMap<>();
         return hashMap;

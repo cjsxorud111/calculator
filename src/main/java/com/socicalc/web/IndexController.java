@@ -2,6 +2,7 @@ package com.socicalc.web;
 
 import com.socicalc.domain.words.KoreanWordDivide;
 import com.socicalc.service.posts.PostsService;
+import com.socicalc.web.dto.DefinedWordsResponseDto;
 import com.socicalc.web.dto.KorWordsResponseDto;
 import com.socicalc.web.dto.PagesDto;
 import com.socicalc.web.dto.PostsResponseDto;
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,12 +37,33 @@ public class IndexController {
 
     @GetMapping("/word")
     public String word(Model model, HttpServletRequest request) {
-        System.out.println("test"+"gggg");
         String definedWord = request.getParameter("mean");
         logger.debug("검색할 단어: {}", definedWord);
         String divided = KoreanWordDivide.toKoJaso(definedWord);
         model.addAttribute("word", postsService.getDefinedWord(divided));
         return "word";
+    }
+
+    @PostMapping("/modify")
+    public String modify(Model model, HttpServletRequest request) throws UnsupportedEncodingException {
+        int wordId = Integer.parseInt(request.getParameter("modify_hidden_id"));
+        String modifyPassword = request.getParameter("modify_hidden_password");
+
+        boolean passwordCheckResult = postsService.passwordCheck(wordId, modifyPassword);
+        DefinedWordsResponseDto definedWordsResponseDto = postsService.getContentById(wordId);
+        if (passwordCheckResult) {
+            model.addAttribute("content",definedWordsResponseDto.getContent());
+            model.addAttribute("wordId", wordId);
+            model.addAttribute("word", definedWordsResponseDto.getTitle());
+            model.addAttribute("modify_password", modifyPassword);
+            return "modify";
+        } else {
+            String divided = KoreanWordDivide.toKoJaso(definedWordsResponseDto.getTitle());
+            model.addAttribute("word", postsService.getDefinedWord(divided));
+            String encodeResult = URLEncoder.encode(definedWordsResponseDto.getTitle(), "UTF-8");
+
+            return "redirect:/word?mean="+encodeResult;
+        }
     }
 
     @GetMapping("/main")

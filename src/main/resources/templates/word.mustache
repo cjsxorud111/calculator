@@ -34,10 +34,13 @@
                 </div>
                 <div style="margin-top: 6px; width: 6rem; text-align: right;">
                     <div style="float: left; width: 6rem;">
-                        <span id="modify-btn" style="font-size: 17px; margin-right: 10px;">수정</span>
+                        <span id="modify-btn"
+                              onclick="modify_password_check({{id}});"
+                              style="font-size: 17px; margin-right: 10px;">수정
+                        </span>
                         <span id="delete-btn"
-                             onclick="delete_password_check({{id}});"
-                             style="font-size: 17px; margin-right: 10px;">삭제
+                              onclick="delete_password_check({{id}});"
+                              style="font-size: 17px; margin-right: 10px;">삭제
                         </span>
                     </div>
                 </div>
@@ -73,7 +76,43 @@
             </div>
         </div>
         <div id="hidden-for-modal"></div>
+
+        <div class="modal"
+             id="modify-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-family: 'Yeon Sung', cursive; font-size: 20px;">비밀번호 입력</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control"
+                               id="input-modify-password" placeholder="비밀번호"
+                               style="font-family: 'Yeon Sung', cursive; font-size: 20px;">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                                style="font-family: 'Yeon Sung', cursive; font-size: 18px;"
+                                onclick="modify_word();">수정
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                                style="font-family: 'Yeon Sung', cursive; font-size: 18px;"
+                                data-dismiss="modal">취소
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="hidden-for-modify-modal"></div>
     {{/word}}
+    <form action="/modify" method="POST"
+          id="modify-form"  accept-charset="utf-8">
+        <input type="hidden" type="text" name="modify_hidden_id" id="hidden-word-id">
+        <input type="hidden" type="text" name="modify_hidden_password" id="hidden-password">
+    </form>
 
 </div>
 
@@ -128,6 +167,26 @@
     }
 </style>
 <script>
+
+    function modify_password_check(id) {
+        $('#modify-modal').modal();
+
+        var hidden = "<input type='hidden' id='modify-modal-hidden-id' value='" + id + "'>";
+        $('#hidden-for-modify-modal').html(hidden);
+    }
+
+    function modify_word() {
+        var word_id = $('#modify-modal-hidden-id').val();
+        var modify_password = $('#input-modify-password').val();
+
+        $('#hidden-word-id').val(word_id);
+
+        //alert('test' + word_id + ' ' + modify_password);
+        $('#hidden-password').val(modify_password);
+
+        var test = document.getElementById('modify-form');
+        test.submit();
+    };
 
     window.onload = function () {
         $('#auto-complete-section').hide();

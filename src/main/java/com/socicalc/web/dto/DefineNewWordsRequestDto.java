@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DefineNewWordsRequestDto {
+    private String id;
     private String title;
     private String tarea;
     private String password;

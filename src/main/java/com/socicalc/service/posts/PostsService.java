@@ -152,7 +152,6 @@ public class PostsService {
     public boolean passwordCheck(int id, String sendedPassword) {
         System.out.println("비번체크컨트롤러");
         String selectedPassword = mapper.getPassword(id);
-        System.out.println(id + " " + selectedPassword + " " + sendedPassword);
         return selectedPassword.equals(sendedPassword);
     }
 
@@ -169,5 +168,13 @@ public class PostsService {
             String dividedWord = koreanWordDivide.toKoJaso(i.getTitle());
             mapper.updateDividedWord(dividedWord, i.getId());
         }
+    }
+
+    public DefinedWordsResponseDto getContentById(int wordId) {
+        return mapper.getContentById(wordId);
+    }
+
+    public void modifyWord(DefineNewWordsRequestDto defineNewWordsRequestDto) {
+        mapper.modifyWord(defineNewWordsRequestDto);
     }
 }

@@ -1,0 +1,90 @@
+{{>layout/header}}
+
+<div class="jumbotron" style="font-family: 'Yeon Sung', cursive;">
+    <div style="font-size: 26px; margin-bottom: 1rem;">단어수정</div>
+    <div>
+        <!-- input태그 자동선택되는 오류로 임시조치 -->
+        <div id="hide-section">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                       placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted"></small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+        </div>
+        <input type="hidden" id="hidden-id" value="{{wordId}}">
+        <div class="form-group">
+            <label for="word" style="font-size: 23px;">신조어 : </label>
+            <input class="form-control"
+                   id="word"
+                   value="{{word}}"
+                   style="height: 60px; font-size: 22px; font-family: 'Yeon Sung', cursive; margin-bottom: 1rem;">
+        </div>
+        <label for="texta" style="font-size: 23px;">의미 : </label>
+        <span>
+            <textarea class="form-control"
+                      id="tarea"
+                      style="height: 300px; font-size: 22px;
+                      font-family: 'Yeon Sung', cursive;
+                      margin-bottom: 1rem;">{{content}}
+            </textarea>
+        </span>
+        <div style="text-align: right">
+            <button type="button"
+                    class="btn btn-primary btn-lg"
+                    id="define-btn"
+                    onclick="modify_word()"
+                    style="font-family: 'Yeon Sung', cursive;
+                font-size: 23px; padding-right: 1rem; padding-left: 1rem;"> 수정하기
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        $('#auto-complete-section').hide();
+
+        // TODO 신조어, 비밀번호 decoration없어지게 수정후 삭제
+        $('#hide-section').hide();
+
+        var param = getParam('word');
+        param = decodeURI(param);
+
+        if (param != '') {
+            $('#word').val(param);
+        }
+    };
+
+    function modify_word() {
+        var password = $('#password').val();
+        var word = $('#word').val();
+        var tarea = $('#tarea').val();
+        var id = $('#hidden-id').val();
+
+        $.ajax({
+            type: "post",
+            url: '/api/v1/modify_word',
+            dataType: "json",
+            data: {
+                password: password,
+                word: word,
+                tarea: tarea,
+                id: id
+            },
+            error: function (e) {
+                alert(JSON.stringify(e));
+            },
+            success: function () {
+                window.location.href = '/word?mean=' + word;
+            }
+        });
+    };
+
+</script>
+{{>layout/footer}}
+
+
