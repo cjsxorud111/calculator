@@ -27,7 +27,7 @@ public class IndexController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final PostsService postsService;
 
-    @GetMapping("/")
+    @GetMapping("/test")
     public String index() { return "index"; }
 
     @GetMapping("/define")
@@ -66,7 +66,7 @@ public class IndexController {
         }
     }
 
-    @GetMapping("/main")
+    @GetMapping("/")
     public String main(Model model, HttpServletRequest request) {
 
         //TODO 페이징 로직 도메인으로 옮기기
