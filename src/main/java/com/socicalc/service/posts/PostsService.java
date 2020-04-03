@@ -150,7 +150,6 @@ public class PostsService {
     }
 
     public boolean passwordCheck(int id, String sendedPassword) {
-        System.out.println("비번체크컨트롤러");
         String selectedPassword = mapper.getPassword(id);
         return selectedPassword.equals(sendedPassword);
     }
@@ -161,11 +160,11 @@ public class PostsService {
         return mapper.searchAutoComplete(KoreanWordDivide.toKoJaso(word));
     }
 
+    // 저장된 단어 잘라서 저장
     public void updateDividedWord() {
         List<DefinedWordsResponseDto> dividedByColumnWords = mapper.getForDivideWord();
-        KoreanWordDivide koreanWordDivide = new KoreanWordDivide();
         for (DefinedWordsResponseDto i : dividedByColumnWords) {
-            String dividedWord = koreanWordDivide.toKoJaso(i.getTitle());
+            String dividedWord = KoreanWordDivide.toKoJaso(i.getTitle());
             mapper.updateDividedWord(dividedWord, i.getId());
         }
     }

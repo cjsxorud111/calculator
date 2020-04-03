@@ -1,4 +1,13 @@
 {{>layout/header}}
+<!--임시조치-->
+<div id="hide-section">
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control"
+               id="exampleInputPassword1" placeholder="Password"
+               autocomplete="off">
+    </div>
+</div>
 
 <div style="font-family: 'Yeon Sung', cursive;">
     <div class="card border-primary mb-3">
@@ -46,6 +55,7 @@
                 </div>
             </div>
         </div>
+
         <div class="modal"
              id="delete-modal">
             <div class="modal-dialog" role="document">
@@ -57,9 +67,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" class="form-control"
+                        <input type="password" class="form-control"
                                id="input-password" placeholder="비밀번호"
-                               style="font-family: 'Yeon Sung', cursive; font-size: 20px;">
+                               style="font-family: 'Yeon Sung', cursive; font-size: 20px;"
+                               autocomplete="off">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary"
@@ -88,9 +99,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" class="form-control"
+                        <input type="password" class="form-control"
                                id="input-modify-password" placeholder="비밀번호"
-                               style="font-family: 'Yeon Sung', cursive; font-size: 20px;">
+                               style="font-family: 'Yeon Sung', cursive; font-size: 20px;"
+                               autocomplete="off">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary"
@@ -190,6 +202,7 @@
 
     window.onload = function () {
         $('#auto-complete-section').hide();
+        $('#exampleInputPassword1').hide();
     };
 
     function delete_password_check(id) {

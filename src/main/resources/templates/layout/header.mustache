@@ -3,6 +3,7 @@
 <head>
     <title id="title">신조어사전</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/sketchy/bootstrap.min.css">
     <script>
         // url파라미터 가져오는함수
@@ -19,9 +20,60 @@
             return sval;
         }
 
+        function auto_recommend_word() {
+
+            var word = $('#inputDefault').val();
+            if (!word) {
+                $('#auto-complete-section').hide();
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/v1/search_auto_complete',
+                    dataType: 'json',
+                    data: {
+                        word: word
+                    },
+                    error: function () {
+                    },
+                    success: function (Parsed_data) {
+
+                        if (!Parsed_data || Parsed_data.length === 0) {
+                            $('#auto-complete-section').hide();
+                        } else {
+                            // 추천검색어 태그생성
+                            let auto_word = "";
+                            for (const k in Parsed_data) {
+                                auto_word += "<div class='list-group-item list-group-item-action' " +
+                                        "id='auto-recommend-word-" + Parsed_data[k]['id'] + "' " +
+                                        "onclick='set_input(" + Parsed_data[k]['id'] + ")'>";
+                                auto_word += Parsed_data[k]['title'];
+                                auto_word += "</div>";
+                            }
+                            $('#auto-complete-section').html(auto_word);
+                            $('#auto-complete-section').show();
+                        }
+                    }
+                });
+            }
+        }
+
+        function set_input(id) {
+            var input_word_id = '#' + 'auto-recommend-word-' + id;
+            var input_word = $(input_word_id).text();
+            $('#inputDefault').val(input_word);
+        }
+
+        function close_auto_recommend_section() {
+            $('#auto-complete-section').hide();
+        }
+
     </script>
     <link href="https://fonts.googleapis.com/css?family=Yeon+Sung&display=swap" rel="stylesheet">
     <style>
+
+        #search-div {
+            width: 30rem;
+        }
 
         #title {
             font-family: 'Yeon Sung', cursive;
@@ -38,13 +90,45 @@
             font-size: 20.5px;
         }
 
+        #auto-complete-section {
+            position: absolute;
+            width: 24rem;
+            font-family: 'Yeon Sung', cursive;
+            font-size: 20.5px;
+            z-index: 9999;
+        }
+
+        @media (max-width: 1010px) {
+            #inputDefault {
+                width: 17rem;
+            }
+
+            #auto-complete-section {
+                width: 17rem;
+            }
+        }
+
         @media (max-width: 800px) {
             #inputDefault {
-
+                width: 12rem;
             }
 
             #auto-complete-section {
                 width: 12rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            #inputDefault {
+                width: 12.5rem;
+            }
+
+            #auto-complete-section {
+                width: 12.5rem;
+            }
+
+            #search-div {
+                width: 18rem;
             }
         }
 
@@ -64,23 +148,15 @@
             font-size: 21px;
         }
 
-        #auto-complete-section {
-            position: absolute;
-            width: 24rem;
-            font-family: 'Yeon Sung', cursive;
-            font-size: 20.5px;
-            z-index: 9999;
-        }
-
     </style>
 </head>
 <body>
 <div class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
     <div class="container">
-        <a href="/main" class="navbar-brand" id="maintitle">신조어 사전</a>
         <!--드랍다운 메뉴 보류-->
-        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="border: 1px solid red;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+                style="border: 1px solid blue;">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -89,96 +165,49 @@
         <div id="test">&nbsp;</div>
         <form class="form-inline my-2 my-lg-0" action="/word"
               method="get" accept-charset="utf-8">
-            <div>
+            <div id="search-div" style="border: 1px solid red;">
                 <input class="form-control mr-sm-2" id="inputDefault"
                        type="text" placeholder="검색" name="mean"
                        onkeyup="auto_recommend_word()"
                        onclick="auto_recommend_word()"
                        autocomplete="off">
                 <div class="list-group" id="auto-complete-section"></div>
+                <span>
+                    <button class="btn btn-secondary my-2 my-sm-0" id="search-button"
+                            onclick="searchWord()" type="submit">검색
+                    </button>
+                </span>
             </div>
-            <button class="btn btn-secondary my-2 my-sm-0" id="search-button"
-                    onclick="searchWord()" type="submit">검색
-            </button>
         </form>
-        <div id="test">&nbsp;</div>
-        <a href="/define" id="new-word">새단어 정의하기</a>
-        <script>
-            function auto_recommend_word() {
+        <div id="test" style="width: 4rem;">&nbsp;</div>
 
-                var word = $('#inputDefault').val();
-                if (!word) {
-                    $('#auto-complete-section').hide();
-                } else {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/api/v1/search_auto_complete',
-                        dataType: 'json',
-                        data: {
-                            word: word
-                        },
-                        error: function () {
-                        },
-                        success: function (Parsed_data) {
+        <!--<a href="/define" id="new-word">새단어 정의하기</a>-->
 
-                            if (!Parsed_data || Parsed_data.length === 0 ) {
-                                $('#auto-complete-section').hide();
-                            } else {
-                                // 추천검색어 태그생성
-                                let auto_word = "";
-                                for (const k in Parsed_data) {
-                                    auto_word += "<div class='list-group-item list-group-item-action' " +
-                                            "id='auto-recommend-word-" + Parsed_data[k]['id'] + "' " +
-                                            "onclick='set_input(" + Parsed_data[k]['id'] + ")'>";
-                                    auto_word += Parsed_data[k]['title'];
-                                    auto_word += "</div>";
-                                }
-                                $('#auto-complete-section').html(auto_word);
-                                $('#auto-complete-section').show();
-                            }
-                        }
-                    });
-                }
-            }
-
-            function set_input(id) {
-                var input_word_id = '#' + 'auto-recommend-word-' + id;
-                var input_word = $(input_word_id).text();
-                $('#inputDefault').val(input_word);
-            }
-
-            function close_auto_recommend_section() {
-                $('#auto-complete-section').hide();
-            }
-
-        </script>
         <!--드랍다운 메뉴버튼 보류-->
-        <!--<div class="collapse navbar-collapse" id="navbarResponsive"
-             style="border: 1px solid mediumvioletred;">
+        <div class="collapse navbar-collapse" id="navbarResponsive"
+             style="border: 1px solid mediumvioletred; margin-left: 10rem;">
 
             <ul class="navbar-nav" style="border: 1px solid green;">
-                 <li class="nav-item">
-                     <a class="nav-link" href="https://blog.bootswatch.com">Blog</a>
-                 </li>
-                 <li class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Sketchy <span
-                             class="caret"></span></a>
-                     <div class="dropdown-menu" aria-labelledby="download">
-                         <a class="dropdown-item" target="_blank" href="https://jsfiddle.net/bootswatch/gbuemo39/">Open
-                             in JSFiddle</a>
-                         <div class="dropdown-divider"></div>
-                         <a class="dropdown-item" href="../4/sketchy/bootstrap.min.css" download>bootstrap.min.css</a>
-                         <a class="dropdown-item" href="../4/sketchy/bootstrap.css" download>bootstrap.css</a>
-                         <div class="dropdown-divider"></div>
-                         <a class="dropdown-item" href="../4/sketchy/_variables.scss" download>_variables.scss</a>
-                         <a class="dropdown-item" href="../4/sketchy/_bootswatch.scss" download>_bootswatch.scss</a>
-                     </div>
-                 </li>
+                <!--메뉴추가시 사용하기-->
+                <!--<li class="nav-item">
+                    <a class="nav-link" href="https://blog.bootswatch.com">Blog</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Sketchy <span
+                            class="caret"></span></a>
+                    <div class="dropdown-menu" aria-labelledby="download">
+                        <a class="dropdown-item" target="_blank" href="https://jsfiddle.net/bootswatch/gbuemo39/">Open
+                            in JSFiddle</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="../4/sketchy/bootstrap.min.css" download>bootstrap.min.css</a>
+                    </div>
+                </li>-->
                 <li class="nav-item">
-
+                    <a class="nav-link" href="/define" id="new-word">새단어 정의하기</a>
                 </li>
             </ul>
-        </div>-->
+        </div>
+
     </div>
 </div>
 

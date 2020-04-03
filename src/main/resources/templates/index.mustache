@@ -1,84 +1,94 @@
-<!doctype>
-<html>
+<!DOCTYPE html>
+<html lang="ko-KR">
 <head>
     <meta charset="utf-8">
-    <style>
-        .container{
-            display: flex;
-            flex-direction: column;
-        }
-        header{
-            border-bottom:1px solid gray;
-            padding-left:20px;
-        }
-        footer{
-            border-top:1px solid gray;
-            padding:20px;
-            text-align: center;
-        }
-        .content{
-            display:flex;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>부트스트램을 이용한 반응형웹 기본 HTML 탬플릿</title>
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png"> <!-- 1. 파비콘 걸기 -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> <!-- 2.부트스트랩용 CSS -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"/>
+    <!-- 3.폰트아이콘용 CSS -->
+    <style type="text/css"> body {
+        padding-top: 70px;
+    }
+
+    footer {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    @media screen and (max-width: 768px) {
+        /* 4. 모바일용 레이아웃이 되었을때 적용되는 CSS */
+        .row-offcanvas {
+            position: relative;
+            -webkit-transition: all 0.25s ease-out;
+            -moz-transition: all 0.25s ease-out;
+            transition: all 0.25s ease-out;
         }
 
-        .content nav{
-            border-right:1px solid gray;
+        .row-offcanvas-right .sidebar-offcanvas {
+            right: -50%;
         }
 
+        .row-offcanvas-left .sidebar-offcanvas {
+            left: -50%;
+        }
 
-        .content aside{
-            border-left:1px solid gray;
+        .row-offcanvas-right .active {
+            right: 50%;
         }
-        @media(max-width:500px){
-            .content{
-                flex-direction: column;
-            }
-            .content nav, .content aside{
-                border:none;
-                flex-basis: auto;
-            }
-            main{
-                order:0;
-            }
-            nav{
-                order:1;
-            }
-            aside{
-                order:2;
-                display: none;
-            }
+
+        .row-offcanvas-left .active {
+            left: 50%;
         }
-        nav, aside{
-            flex-basis: 150px;
-            flex-shrink: 0;
+
+        .sidebar-offcanvas {
+            position: absolute;
+            top: 0;
+            width: 50%;
         }
-        main{
-            padding:10px;
-        }
-    </style>
+    } </style> <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]> <!-- 5. 인터넷익스플로러 9버전 이하일 경우 html5가 인식될 수 있게 해주는 스크립트 -->
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="./images/respond.min.js"></script>
+    <![endif]--> <!--[if IE 7]> <!-- 6. 인터넷익스플로러 7버전 일 경우 폰트아이콘이 인식될 수 있게 해주는 스크립트 -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css" rel="stylesheet">
+    <![endif]-->
 </head>
 <body>
-<div class="container">
-    <header>
-        <h1>생활코딩</h1>
-    </header>
-    <section class="content">
-        <nav>
-            <ul>
-                <li>html</li>
-                <li>css</li>
-                <li>javascript</li>
+<header class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header"> <!--7. 모바일 시 GNB 메뉴 숨기기 시작 -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <!--모바일 시 GNB 메뉴 숨기기 끝 --> <a class="navbar-brand" href="#">Project name</a></div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-        </nav>
-        <main>
-
-        </main>
-        <aside>
-            AD
-        </aside>
-    </section>
-    <footer>
-        <a href="https://opentutorials.org/course/1">홈페이지</a>
-    </footer>
-</div>
+        </div><!-- /.nav-collapse --> </div><!-- /.container --> </header><!-- /.navbar -->
+<div class="container">
+    <div class="row row-offcanvas row-offcanvas-right">
+        <section class="col-xs-12 col-sm-9"> <!--8. 모바일 시 사이드 메뉴 숨기기 시작 -->
+            <p class="pull-right visible-xs">
+                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+            </p> <!--모바일 시 사이드 메뉴 숨기기 끝 --> #################<br> 매인 컨텐츠 영역<br> #################<br></section>
+        <!--/span-->
+        <nav class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="well"> ##############<br> 사이드바 영역<br> ##############<br></div><!--/.well --> </nav><!--/nav-->
+    </div><!--/row--> </div><!--/.container-->
+<hr>
+<footer><p>&copy; Company 2013</p></footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> <!--9. jquery 스크립트 -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script><!--10. bootstrap 스크립트 -->
+<script type="text/javascript"> $(document).ready(function () {
+    $('[data-toggle=offcanvas]').click(function () {
+        $('.row-offcanvas').toggleClass('active');
+    });
+}); </script>
 </body>
 </html>
