@@ -1,0 +1,21 @@
+{{>layout/header}}
+
+<div class="container" style="margin-top: 5rem;">
+    <button onclick="">랜덤정렬</button>
+
+</div>
+<script>
+    function random() {
+        $.ajax({
+            type: 'POST',
+            url: '/api/v1/random',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: contentid
+        }).done(function (test) {
+            alert(test);
+        }).fail(function (error) {
+            alert(error);
+        });
+    }
+</script>

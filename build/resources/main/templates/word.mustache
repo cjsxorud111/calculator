@@ -1,0 +1,261 @@
+{{>layout/header}}
+<!--임시조치-->
+<div id="hide-section">
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control"
+               id="exampleInputPassword1" placeholder="Password"
+               autocomplete="off">
+    </div>
+</div>
+
+<div style="font-family: 'Yeon Sung', cursive;">
+    <div class="card border-primary mb-3">
+        <div class="card-header" style="font-size: 20px;"></div>
+        <div class="cont" id="new-word-btn"
+             onclick="redirect_define_page();"
+             style="text-decoration: none;">
+            <div class="card-body">
+                <p class="card-text" style="font-size: 20px; text-align: center;">
+                    새 정의 추가 +
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {{#word}}
+        <div class="card border-primary mb-3">
+            <div class="card-header" style="font-size: 20px;">
+                <div>{{title}}</div>
+                <div class="recommend-section">
+                    <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
+                    <span class="recommend-icon" id="recommend-id-{{id}}"
+                          onclick="recommendation({{id}})">♡</span>
+                    <input type="hidden" id="hidden-id-value" value="{{id}}">
+                </div>
+            </div>
+            <div class="cont"
+                 style="text-decoration: none;">
+                <div class="card-body">
+                    <p class="card-text" style="font-size: 20px;">
+                        {{content}}
+                    </p>
+                </div>
+                <div style="margin-top: 6px; width: 6rem; text-align: right;">
+                    <div style="float: left; width: 6rem;">
+                        <span id="modify-btn"
+                              onclick="modify_password_check({{id}});"
+                              style="font-size: 17px; margin-right: 10px;">수정
+                        </span>
+                        <span id="delete-btn"
+                              onclick="delete_password_check({{id}});"
+                              style="font-size: 17px; margin-right: 10px;">삭제
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal"
+             id="delete-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-family: 'Yeon Sung', cursive; font-size: 20px;">비밀번호 입력</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="password" class="form-control"
+                               id="input-password" placeholder="비밀번호"
+                               style="font-family: 'Yeon Sung', cursive; font-size: 20px;"
+                               autocomplete="off">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                                style="font-family: 'Yeon Sung', cursive; font-size: 18px;"
+                                onclick="delete_word();">삭제
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                                style="font-family: 'Yeon Sung', cursive; font-size: 18px;"
+                                data-dismiss="modal">취소
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="hidden-for-modal"></div>
+
+        <div class="modal"
+             id="modify-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-family: 'Yeon Sung', cursive; font-size: 20px;">비밀번호 입력</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="password" class="form-control"
+                               id="input-modify-password" placeholder="비밀번호"
+                               style="font-family: 'Yeon Sung', cursive; font-size: 20px;"
+                               autocomplete="off">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                                style="font-family: 'Yeon Sung', cursive; font-size: 18px;"
+                                onclick="modify_word();">수정
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                                style="font-family: 'Yeon Sung', cursive; font-size: 18px;"
+                                data-dismiss="modal">취소
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="hidden-for-modify-modal"></div>
+    {{/word}}
+    <form action="/modify" method="POST"
+          id="modify-form"  accept-charset="utf-8">
+        <input type="hidden" type="text" name="modify_hidden_id" id="hidden-word-id">
+        <input type="hidden" type="text" name="modify_hidden_password" id="hidden-password">
+    </form>
+
+</div>
+
+<div id="for-footer-interval"></div>
+<style>
+
+    #modify-btn:hover {
+        cursor: pointer;
+    }
+
+    #delete-btn:hover {
+        cursor: pointer;
+    }
+
+    #for-footer-interval {
+        margin-top: 30rem;
+    }
+
+    #new-word-btn:hover {
+        font-size: 21px;
+        background-color: #E0E0E0;
+        cursor: pointer;
+    }
+
+    .cont {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .card-header {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .recommend-section {
+        text-align: right;
+        flex-grow: 1;
+    }
+
+    .recommend-icon:hover {
+        font-size: 21px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .recommend-icon:link {
+        text-decoration: none;
+    }
+
+    .recommend-icon:visited {
+        text-decoration: none;
+    }
+</style>
+<script>
+
+    function modify_password_check(id) {
+        $('#modify-modal').modal();
+
+        var hidden = "<input type='hidden' id='modify-modal-hidden-id' value='" + id + "'>";
+        $('#hidden-for-modify-modal').html(hidden);
+    }
+
+    function modify_word() {
+        var word_id = $('#modify-modal-hidden-id').val();
+        var modify_password = $('#input-modify-password').val();
+
+        $('#hidden-word-id').val(word_id);
+
+        //alert('test' + word_id + ' ' + modify_password);
+        $('#hidden-password').val(modify_password);
+
+        var test = document.getElementById('modify-form');
+        test.submit();
+    };
+
+    window.onload = function () {
+        $('#auto-complete-section').hide();
+        $('#exampleInputPassword1').hide();
+    };
+
+    function delete_password_check(id) {
+        $('#delete-modal').modal();
+
+        var hidden = "<input type='hidden' id='modal-hidden-id' value='" + id + "'>";
+        $('#hidden-for-modal').html(hidden);
+    }
+
+    function delete_word() {
+        var delete_password = $('#input-password').val();
+        var word_id = $('#modal-hidden-id').val();
+        $.ajax({
+            type: "post",
+            url: '/api/v1/delete_word',
+            dataType: "json",
+            data: {
+                word_id: word_id,
+                delete_password: delete_password
+            },
+            error: function (e) {
+                console.log(e);
+            },
+            success: function (parse_data) {
+                window.location.reload();
+            }
+        });
+    };
+
+    function redirect_define_page() {
+        var param = getParam('mean');
+        window.location.href = '/define?word=' + param;
+    };
+
+    function recommendation(contentid) {
+        $.ajax({
+            type: "post",
+            url: '/api/v1/recommendation',
+            dataType: "json",
+            data: {
+                contentid: contentid,
+            },
+            error: function (e) {
+                console.log(e);
+            },
+            success: function (Parse_data) {
+                console.log('success' + JSON.stringify(Parse_data));
+                var conid = 'recommend-count-' + contentid;
+                var num = document.getElementById(conid).innerHTML;
+                var addNum = Number(num) + 1;
+                document.getElementById(conid).innerHTML = addNum;
+            }
+        });
+    };
+</script>
+{{>layout/footer}}

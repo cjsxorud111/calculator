@@ -1,0 +1,195 @@
+{{>layout/header}}
+
+
+<div class="bs-docs-section">
+    <div class="row" id="contents">
+        <div class="col-lg-4">
+            {{#firstColumn}}
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header">
+                        <span id="word-title-{{id}}">{{title}}</span>
+                        <span class="recommend-section">
+                            <span>
+                                <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
+                                <span class="recommend-icon" id="recommend-id-{{id}}"
+                                      onclick="recommendation({{id}})">♡</span>
+                            </span>
+                        </span>
+                    </div>
+
+                    <a href="javascript:search_the_word({{id}})" class="cont" id="content-id-{{id}}">
+                        <div class="card-body">
+                            <p class="card-text">{{content}}</p>
+                        </div>
+                    </a>
+                </div>
+            {{/firstColumn}}
+        </div>
+        <div class="col-lg-4">
+            {{#secondColumn}}
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header">
+                        <span id="word-title-{{id}}">{{title}}</span>
+                        <span class="recommend-section">
+                            <span>
+                                <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
+                                <span class="recommend-icon" id="recommend-id-{{id}}"
+                                      onclick="recommendation({{id}})">♡</span>
+                            </span>
+                        </span>
+                    </div>
+
+                    <a href="javascript:search_the_word({{id}})" class="cont" id="content-id-{{id}}">
+                        <div class="card-body">
+                            <p class="card-text">{{content}}</p>
+                        </div>
+                    </a>
+                </div>
+            {{/secondColumn}}
+        </div>
+        <div class="col-lg-4">
+            {{#thirdColumn}}
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header">
+                        <span id="word-title-{{id}}">{{title}}</span>
+                        <span class="recommend-section">
+                            <span>
+                                <span id="recommend-count-{{id}}">{{recommendation_count}} </span>
+                                <span class="recommend-icon" id="recommend-id-{{id}}"
+                                      onclick="recommendation({{id}})">♡</span>
+                            </span>
+                        </span>
+                    </div>
+
+                    <a href="javascript:search_the_word({{id}})" class="cont" id="content-id-{{id}}">
+                        <div class="card-body">
+                            <p class="card-text">{{content}}</p>
+                        </div>
+                    </a>
+                </div>
+            {{/thirdColumn}}
+        </div>
+    </div>
+</div>
+<div id="paging">
+    <div class="test1">&nbsp;</div>
+    <div class="pages">
+        <ul class="pagination pagination-lg">
+            <li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+            <li class="page-item {{firstArrowActive}}">
+                <a class="page-link" id="previousPages" href="/main?page={{previousPages}}">&laquo;</a>
+            </li>
+            {{#pageNum.num}}
+                <li class="page-item {{active}}">
+                    <a class="page-link" id="page{{numm}}" href="/main?page={{numm}}">{{numm}}</a>
+                </li>
+            {{/pageNum.num}}
+            <li class="page-item {{lastArrowActive}}">
+                <a class="page-link" id="afterPages" href="/main?page={{afterPages}}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+    <div class="test1">&nbsp;</div>
+</div>
+
+{{>layout/footer}}
+
+<script>
+
+    function search_the_word(title) {
+        var idcss = '#word-title-' + title;
+        var content = $(idcss).html();
+
+        window.location.href = '/word?mean=' + encodeURI(content);
+    }
+
+    window.onload = function () {
+        $('#auto-complete-section').hide();
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/v1/main-paging',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(num)
+        }).done(function () {
+            window.location.href = '/main';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    };
+
+    function recommendation(contentid) {
+        $.ajax({
+            type: "post",
+            url: '/api/v1/recommendation',
+            dataType: "json",
+            data: {
+                contentid: contentid,
+            },
+            error: function (e) {
+                console.log(e);
+            },
+            success: function (Parse_data) {
+                console.log('success' + JSON.stringify(Parse_data));
+                var conid = 'recommend-count-' + contentid;
+                var num = document.getElementById(conid).innerHTML;
+                var addNum = Number(num) + 1;
+                document.getElementById(conid).innerHTML = addNum;
+            }
+        });
+    };
+
+</script>
+
+<style>
+    a:hover {
+        text-decoration: none;
+    }
+
+    .cont {
+        text-decoration: none;
+    }
+
+    .cont:hover {
+        background-color: #E0E0E0
+    }
+
+    .pages {
+        flex-grow: 0.5;
+    }
+
+    .test1 {
+        flex-grow: 3.5;
+    }
+
+    #paging {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #contents {
+        font-family: 'Yeon Sung', cursive;
+        font-size: larger;
+    }
+
+    .recommend-section {
+        text-align: right;
+        float: right;
+    }
+
+    .recommend-icon:hover {
+        font-size: 21px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .recommend-icon:link {
+        text-decoration: none;
+    }
+
+    .recommend-icon:visited {
+        text-decoration: none;
+    }
+
+</style>
