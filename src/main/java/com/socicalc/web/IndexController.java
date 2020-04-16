@@ -78,6 +78,9 @@ public class IndexController {
             thisPageInt = Integer.parseInt(thisPage);
         }
 
+        if (!postsService.test()){
+
+        }
         List<List<KorWordsResponseDto>> words = postsService.findWords(thisPageInt);
         PagesDto num = postsService.getPageNum(thisPageInt);
 

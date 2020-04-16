@@ -8,9 +8,13 @@ import com.socicalc.domain.words.WordCrawler;
 import com.socicalc.mybatisdao.Mapper;
 import com.socicalc.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +22,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class PostsService {
+    private static final String[] CURRENCY_LIST_ROUND_HALF_UP_ONE = {"USD", "EUR", "SGD", "AUD"};
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostsService.class);
+    protected static final String[] test11 = {"test1", "test2", "test3"};
+    private static final int test111 = 1;
     private final PostsRepository postsRepository;
     private final KorWordsPostsRepository korWordsPostsRepository;
     private final Mapper mapper;
@@ -169,11 +177,40 @@ public class PostsService {
         }
     }
 
+    public static double roundUpPrice(String currency, BigDecimal decimal) {
+
+        for (String c : CURRENCY_LIST_ROUND_HALF_UP_ONE) {
+            if (c.equalsIgnoreCase(currency)) {
+                return decimal.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+            }
+        }
+
+        return decimal.setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
     public DefinedWordsResponseDto getContentById(int wordId) {
         return mapper.getContentById(wordId);
     }
 
     public void modifyWord(DefineNewWordsRequestDto defineNewWordsRequestDto) {
         mapper.modifyWord(defineNewWordsRequestDto);
+    }
+
+    public boolean test() {
+        String url = null;
+        String test = "테스트임";
+
+        try {
+            int a = 1;
+            test.getBytes("euc-kr");
+            url = java.net.URLEncoder.encode(test, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            System.out.println(" XXXXXXXXXXXXXXXXXXXX");
+            LOGGER.error("지원하지 않는 인코딩 방식입니다.", e);
+        }
+
+        System.out.println("this.s.test!!!!라고"+url);
+        return false;
     }
 }

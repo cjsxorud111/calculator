@@ -97,24 +97,133 @@
             font-size: 20.5px;
             z-index: 9999;
         }
+        #space-for-left-align1 {
+            width: 4rem;
+        }
 
-        @media (max-width: 1010px) {
-            #inputDefault {
-                width: 17rem;
+        #space-for-left-align2 {
+            width: 4rem;
+        }
+
+        #space-for-left-align3 {
+            width: 4rem;
+        }
+
+        #space-for-right-align1 {
+            width: 3.5rem;
+        }
+
+        #space-for-right-align2 {
+            width: 3.5rem;
+        }
+
+        #space-for-right-align3 {
+            width: 3.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            #space-for-left-align1 {
+                width: 3rem;
+            }
+            #space-for-left-align2 {
+                width: 3rem;
+            }
+            #space-for-left-align3 {
+                width: 3rem;
             }
 
+            #space-for-right-align1 {
+                display: none;
+            }
+            #space-for-right-align2 {
+                display: none;
+            }
+            #space-for-right-align3 {
+                width: 2rem;
+            }
+            #inputDefault {
+                width: 20rem;
+            }
             #auto-complete-section {
-                width: 17rem;
+                width: 20rem;
+            }
+        }
+
+        @media (max-width: 1010px) {
+           /* #space-for-left-align1 {
+                display: none;
+            }
+            #space-for-left-align2 {
+                display: none;
+            }
+            #space-for-left-align3 {
+                display: none;
+            }*/
+            #space-for-right-align1 {
+                display: none;
+            }
+            #space-for-right-align2 {
+                display: none;
+            }
+            #space-for-right-align3 {
+                display: none;
+            }
+            #inputDefault {
+                width: 18rem;
+            }
+            #auto-complete-section {
+                width: 18rem;
             }
         }
 
         @media (max-width: 800px) {
+            /*#space-for-left-align1 {
+                display: none;
+            }
+            #space-for-left-align2 {
+                display: none;
+            }
+            #space-for-left-align3 {
+                display: none;
+            }*/
+            #space-for-right-align1 {
+                display: none;
+            }
+            #space-for-right-align2 {
+                display: none;
+            }
+            #space-for-right-align3 {
+                display: none;
+            }
+
             #inputDefault {
-                width: 12rem;
+                width: 18rem;
             }
 
             #auto-complete-section {
-                width: 12rem;
+                width: 18rem;
+            }
+
+            /*#search-button {
+                position: absolute;
+                left: 266px;
+                top: 66px;
+            }*/
+        }
+
+        /*@media (min-width: 576px) and (max-width: 589px) {
+            #search-button {
+                position: absolute;
+                left: 280px;
+                top: 66px;
+            }
+        }*/
+
+        @media (min-width: 481px) and (max-width: 576px) {
+            #search-button {
+                position: absolute;
+                left: 280px;
+                top: 58px;
             }
         }
 
@@ -127,8 +236,17 @@
                 width: 12.5rem;
             }
 
-            #search-div {
-                width: 18rem;
+            #inputDefault {
+                width: 20rem;
+            }
+            #auto-complete-section {
+                width: 20rem;
+            }
+
+            #search-button {
+                position: absolute;
+                right: 17px;
+                top: 59px;
             }
         }
 
@@ -139,7 +257,7 @@
 
         #new-word {
             font-family: 'Yeon Sung', cursive;
-            margin-right: 30px;
+            /*margin-right: 15px;*/
             font-size: 20.5px;
             text-decoration: none;
         }
@@ -155,17 +273,19 @@
     <div class="container">
         <!--드랍다운 메뉴 보류-->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
-                style="border: 1px solid blue;">
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <a href="/main" class="navbar-brand" id="maintitle">신조어사전</a>
 
-        <div id="test">&nbsp;</div>
+        <!--검색창 위치 정렬위한 공백-->
+        <div id="space-for-left-align1">&nbsp;</div>
+        <div id="space-for-left-align2">&nbsp;</div>
+        <div id="space-for-left-align3">&nbsp;</div>
         <form class="form-inline my-2 my-lg-0" action="/word"
               method="get" accept-charset="utf-8">
-            <div id="search-div" style="border: 1px solid red;">
+            <div id="search-div">
                 <input class="form-control mr-sm-2" id="inputDefault"
                        type="text" placeholder="검색" name="mean"
                        onkeyup="auto_recommend_word()"
@@ -179,15 +299,13 @@
                 </span>
             </div>
         </form>
-        <div id="test" style="width: 4rem;">&nbsp;</div>
 
         <!--<a href="/define" id="new-word">새단어 정의하기</a>-->
 
         <!--드랍다운 메뉴버튼 보류-->
-        <div class="collapse navbar-collapse" id="navbarResponsive"
-             style="border: 1px solid mediumvioletred; margin-left: 10rem;">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
 
-            <ul class="navbar-nav" style="border: 1px solid green;">
+            <div class="navbar-nav">
                 <!--메뉴추가시 사용하기-->
                 <!--<li class="nav-item">
                     <a class="nav-link" href="https://blog.bootswatch.com">Blog</a>
@@ -202,10 +320,20 @@
                         <a class="dropdown-item" href="../4/sketchy/bootstrap.min.css" download>bootstrap.min.css</a>
                     </div>
                 </li>-->
+                <!--오른쪽 정렬을 위하 공백-->
+                <li class="nav-item">
+                    <div class="nav-link" href="/define" id="space-for-right-align1">&nbsp;</div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link" href="/define" id="space-for-right-align2">&nbsp;</div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link" href="/define" id="space-for-right-align3">&nbsp;</div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/define" id="new-word">새단어 정의하기</a>
                 </li>
-            </ul>
+            </div>
         </div>
 
     </div>
